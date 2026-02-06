@@ -4,10 +4,24 @@
 {% block content %}
 <h1 class="mb-4">Обробка даних</h1>
 <p class="lead">Ласкаво просимо, {{ user.get_username }}.</p>
-<p>Тут будуть доступні:</p>
-<ul>
-    <li><strong>Підгрузка даних</strong> — завантаження xls/csv файлів</li>
-    <li><strong>Оброблена статистика</strong> — перегляд агрегованих результатів по роках</li>
-</ul>
-<p class="text-muted">Функціонал загрузки та статистики буде додано в наступних комітах.</p>
+
+<section class="mb-4">
+    <h2 class="h5 mb-3">Підгрузка даних</h2>
+    <form action="{% url 'data_processing:upload' %}" method="post" enctype="multipart/form-data" class="row g-2 align-items-end">
+        {% csrf_token %}
+        <div class="col-auto">
+            <label for="id_file" class="form-label">Файл (xls/csv)</label>
+            <input type="file" name="file" class="form-control" id="id_file" accept=".xls,.xlsx,.csv" required>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Завантажити</button>
+        </div>
+    </form>
+    <p class="form-text text-muted">Колонки темплейту: Advertis, Brand, Start, End, Format, Platform, Impr. Порядок колонок може бути довільним. Start та End не повинні бути порожніми.</p>
+</section>
+
+<section>
+    <h2 class="h5 mb-3">Агреговані результати</h2>
+    <p><a href="{% url 'data_processing:stats' %}" class="btn btn-outline-primary">Переглянути сумарні значення по роках</a></p>
+</section>
 {% endblock %}

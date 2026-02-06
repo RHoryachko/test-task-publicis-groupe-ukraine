@@ -18,7 +18,7 @@ class DataFileAdmin(admin.ModelAdmin):
     )
     list_filter = ('status', 'error_type', 'uploaded_at')
     search_fields = ('filename', 'user__email', 'user__username')
-    readonly_fields = ('uploaded_at', 'file_size')
+    readonly_fields = ('uploaded_at', 'file_size', 'skipped_rows_log')
     date_hierarchy = 'uploaded_at'
     
     fieldsets = (
@@ -30,6 +30,11 @@ class DataFileAdmin(admin.ModelAdmin):
         }),
         ('Статистика', {
             'fields': ('rows_processed',)
+        }),
+        ('Лог пропущених рядків', {
+            'fields': ('skipped_rows_log',),
+            'classes': ('collapse',),
+            'description': 'Рядки з невалідним форматом дат (Start/End) або де Start > End — записані сюди та не потрапили в обробку.'
         }),
         ('Дата', {
             'fields': ('uploaded_at',),

@@ -64,6 +64,11 @@ class DataFile(models.Model):
         blank=True,
         verbose_name='Number of processed rows'
     )
+    skipped_rows_log = models.TextField(
+        blank=True,
+        default='',
+        verbose_name='Лог пропущених рядків (Start > End)'
+    )
     
     class Meta:
         verbose_name = 'Uploaded file'
