@@ -6,6 +6,15 @@ import sys
 
 def main():
     """Run administrative tasks."""
+    # Add the project directory to Python path
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+    if BASE_DIR not in sys.path:
+        sys.path.insert(0, BASE_DIR)
+    
+    # Also add /src if we're in Docker
+    if '/src' not in sys.path and os.path.exists('/src'):
+        sys.path.insert(0, '/src')
+    
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
     try:
         from django.core.management import execute_from_command_line

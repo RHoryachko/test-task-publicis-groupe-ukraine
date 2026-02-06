@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Головна{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Обробка даних</h1>
+<p class="lead">Ласкаво просимо, {{ user.get_username }}.</p>
+<p>Тут будуть доступні:</p>
+<ul>
+    <li><strong>Підгрузка даних</strong> — завантаження xls/csv файлів</li>
+    <li><strong>Оброблена статистика</strong> — перегляд агрегованих результатів по роках</li>
+</ul>
+<p class="text-muted">Функціонал загрузки та статистики буде додано в наступних комітах.</p>
+{% endblock %}

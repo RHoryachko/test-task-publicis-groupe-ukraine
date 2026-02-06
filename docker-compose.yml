@@ -12,5 +12,5 @@ services:
       - EMAIL_HOST_USER=${EMAIL_HOST_USER}
       - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
       - SERVER_EMAIL=${SERVER_EMAIL}
-    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: sh -c "cd /src && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     restart: unless-stopped 

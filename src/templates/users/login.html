@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Увійти{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow">
+            <div class="card-body p-4">
+                <h2 class="card-title mb-4">Увійти</h2>
+                <form method="post" action="{% url 'users:login' %}">
+                    {% csrf_token %}
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                    {% endif %}
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label">Логін або email</label>
+                        <input type="text" name="username" id="id_username" class="form-control" required autofocus value="{{ form.username.value|default:'' }}" placeholder="admin або admin@example.com">
+                        {% if form.username.errors %}<div class="invalid-feedback d-block">{{ form.username.errors }}</div>{% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <label for="id_password" class="form-label">Пароль</label>
+                        <input type="password" name="password" id="id_password" class="form-control" required>
+                        {% if form.password.errors %}<div class="invalid-feedback d-block">{{ form.password.errors }}</div>{% endif %}
+                    </div>
+                    <input type="hidden" name="next" value="{{ next }}">
+                    <button type="submit" class="btn btn-primary w-100">Увійти</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
