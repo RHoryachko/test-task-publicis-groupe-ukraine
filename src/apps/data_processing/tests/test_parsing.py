@@ -1,5 +1,3 @@
-import pytest
-
 from apps.data_processing.services.parsing import validate_and_parse
 
 

@@ -19,6 +19,6 @@ if "/src" not in sys.path and os.path.exists("/src"):
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 
-from django.core.asgi import get_asgi_application
+from django.core.asgi import get_asgi_application  # noqa: E402
 
 application = get_asgi_application()

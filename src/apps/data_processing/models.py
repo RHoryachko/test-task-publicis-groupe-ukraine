@@ -9,7 +9,7 @@ class DataFile(models.Model):
         ('error', 'Error'),
         ('processing', 'Processing'),
     ]
-    
+
     _ERROR_TYPE_CHOICES = [
         ('validation', 'Validation error'),
         ('format', 'Invalid file format'),
@@ -21,7 +21,7 @@ class DataFile(models.Model):
         ('numeric', 'Error in numeric columns'),
         ('other', 'Other error'),
     ]
-    
+
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -69,7 +69,7 @@ class DataFile(models.Model):
         default='',
         verbose_name='Лог пропущених рядків (Start > End)'
     )
-    
+
     class Meta:
         verbose_name = 'Uploaded file'
         verbose_name_plural = 'Uploaded files'
@@ -80,7 +80,7 @@ class DataFile(models.Model):
             models.Index(fields=['status']),
             models.Index(fields=['error_type']),
         ]
-    
+
     def __str__(self):
         return f"{self.filename} - {self.get_status_display()}"
 
@@ -145,7 +145,7 @@ class DataRecord(models.Model):
         default=timezone.now,
         verbose_name='Created at'
     )
-    
+
     class Meta:
         verbose_name = 'Data record'
         verbose_name_plural = 'Data records'
@@ -157,6 +157,6 @@ class DataRecord(models.Model):
             models.Index(fields=['start_date', 'end_date']),
             models.Index(fields=['advertiser', 'brand']),
         ]
-    
+
     def __str__(self):
         return f"Data record {self.id} from {self.file.filename} ({self.year})"

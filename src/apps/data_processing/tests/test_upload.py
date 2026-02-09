@@ -1,5 +1,3 @@
-import io
-
 import pytest
 
 from apps.data_processing.models import DataFile, DataRecord

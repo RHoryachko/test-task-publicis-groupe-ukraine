@@ -1,0 +1,73 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+env:
+  DJANGO_SETTINGS_MODULE: core.settings
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install flake8
+        run: pip install flake8
+
+      - name: Lint (flake8)
+        run: cd src && flake8 apps core --max-line-length=120 --extend-ignore=E203,W503
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Django check
+        run: cd src && python manage.py check
+
+      - name: Run tests
+        run: cd src && python -m pytest apps/data_processing/tests/ -v --tb=short
+        env:
+          SECRET_KEY: test-secret
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          load: true
+          tags: app:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Smoke test
+        run: |
+          docker run --rm -e SECRET_KEY=smoke -e DEBUG=true -e DJANGO_SETTINGS_MODULE=core.settings \
+            app:ci python manage.py check

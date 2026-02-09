@@ -68,7 +68,7 @@ _EXCEL_ERROR_STRINGS = frozenset(
 )
 
 
-def _parse_date(val):
+def _parse_date(val):  # noqa: C901
     """Parse date from string, number (Excel serial), or datetime."""
     if pd.isna(val) or val == "" or (isinstance(val, str) and not val.strip()):
         return None
@@ -142,7 +142,7 @@ def _parse_number(val):
         return None
 
 
-def validate_and_parse(file_content, filename):
+def validate_and_parse(file_content, filename):  # noqa: C901
     """
     Validate file and return (success, data_or_error_message, error_type, skipped_rows).
     """

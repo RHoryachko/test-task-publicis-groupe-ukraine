@@ -20,7 +20,7 @@ class DataFileAdmin(admin.ModelAdmin):
     search_fields = ('filename', 'user__email', 'user__username')
     readonly_fields = ('uploaded_at', 'file_size', 'skipped_rows_log')
     date_hierarchy = 'uploaded_at'
-    
+
     fieldsets = (
         ('Файл', {
             'fields': ('user', 'filename', 'file_size')
@@ -41,13 +41,13 @@ class DataFileAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
     )
-    
+
     def get_user_email(self, obj):
         """Get user email."""
         return obj.user.email
     get_user_email.short_description = 'User email'
     get_user_email.admin_order_field = 'user__email'
-    
+
     def get_queryset(self, request):
         """Optimization of requests."""
         return super().get_queryset(request).select_related('user')
@@ -76,7 +76,7 @@ class DataRecordAdmin(admin.ModelAdmin):
     )
     readonly_fields = ('created_at',)
     date_hierarchy = 'start_date'
-    
+
     fieldsets = (
         ('Файл', {
             'fields': ('file',)
@@ -98,13 +98,13 @@ class DataRecordAdmin(admin.ModelAdmin):
             'classes': ('collapse',)
         }),
     )
-    
+
     def get_file_name(self, obj):
         """Get file name."""
         return obj.file.filename
     get_file_name.short_description = 'Файл'
     get_file_name.admin_order_field = 'file__filename'
-    
+
     def get_queryset(self, request):
         """Оптимізація запитів."""
         return super().get_queryset(request).select_related('file')
